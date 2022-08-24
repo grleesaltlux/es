@@ -26,17 +26,16 @@ services:
     image: elasticsearch:8.1.2 # 사용 이미지
     container_name: ann_es
     environment:
-    - discovery.type=single-node # 싱글 es 설정
-    - bootstrap.memory_lock=true # 아래와 같이 생략 가능
-    - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # min, max memory 설정 (생략가능)
+      - discovery.type=single-node # 싱글 es 설정
+      #- bootstrap.memory_lock=true # 아래와 같이 생략 가능
+      #- "ES_JAVA_OPTS=-Xms512m -Xmx512m" # min, max memory 설정 (생략가능)
     ports:
-    - "9200:9200"
-    - "9300:9300"
+      - "9200:9200"
     volumes:
-    - ./data:/usr/share/elasticsearch/data # data mount
-    - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml # 설정 파일
+      - ./data:/usr/share/elasticsearch/data # data mount
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml # 설정 파일
     networks:
-    - ann_es
+      - ann_es
 ```
 ---
 ## 실행
