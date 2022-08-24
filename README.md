@@ -2,12 +2,9 @@ ElasticSearch 설치가이드
 =============
 
 ## 준비
-### git clone
-```shell
-git clone https://github.com/grleesaltlux/es.git
-```
 ### 준비 및 파일 권한 수정
 ```shell
+git clone https://github.com/grleesaltlux/es.git
 cd es
 mkdir data
 chmod 777 ./data
@@ -27,7 +24,7 @@ services:
     container_name: ann_es
     environment:
       - discovery.type=single-node # 싱글 es 설정
-      #- bootstrap.memory_lock=true # 아래와 같이 생략 가능
+      #- bootstrap.memory_lock=true # 아래 옵션이랑 세트로 생략
       #- "ES_JAVA_OPTS=-Xms512m -Xmx512m" # min, max memory 설정 (생략가능)
     ports:
       - "9200:9200"
@@ -123,6 +120,6 @@ docker-compose down
 - shell
   ```
   curl -XPOST '${IP}:${PORT}/${INDEX_NAME}/_doc/${ID}?pretty' \
-  -H 'Content-type:application/json' \
-  -d '{"name": "test"}'
+    -H 'Content-type:application/json' \
+    -d '{"name": "test"}'
   ```
