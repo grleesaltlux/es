@@ -6,8 +6,10 @@ Step 01. Create AWS IAM
 ```shell
 git clone https://github.com/grleesaltlux/es.git
 ```
-### 파일 권한 수정
+### 준비 및 파일 권한 수정
 ```shell
+cd es
+mkdir data
 chmod 777 ./data
 chmod 755 ./elasticsearch.yml
 ```
@@ -20,20 +22,21 @@ ann_es:
 driver: bridge
 
 services:
-es:
-image: elasticsearch:8.1.2 # 사용 이미지
-environment:
-- discovery.type=single-node # 싱글 es 설정
-- bootstrap.memory_lock=true
-- "ES_JAVA_OPTS=-Xms512m -Xmx512m" # min, max memory 설정
-ports:
-- "9200:9200"
-- "9300:9300"
-volumes:
-- ./data:/usr/share/elasticsearch/data # data mount
-- ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml # 설정 파일
-networks:
-- ann_es
+  es:
+    image: elasticsearch:8.1.2 # 사용 이미지
+    container_name: ann_es
+    environment:
+    - discovery.type=single-node # 싱글 es 설정
+    - bootstrap.memory_lock=true
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # min, max memory 설정
+    ports:
+    - "9200:9200"
+    - "9300:9300"
+    volumes:
+    - ./data:/usr/share/elasticsearch/data # data mount
+    - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml # 설정 파일
+    networks:
+    - ann_es
 ```
 ---
 ## 실행
@@ -44,7 +47,7 @@ docker-compose up -d
 ```
 ### 컨테이너 확인
 ```shell
-docker ps | grep elasticsearch_es_1
+docker ps | grep ann_es
 ```
 ### 컨테이너 삭제
 ```shell

@@ -7,13 +7,14 @@ networks:
 services:
   es:
     image: elasticsearch:8.1.2
+    container_name: ann_es
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
       - "9200:9200"
-      - "9300:9300"
+#      - "9300:9300"
     volumes:
       - ./data:/usr/share/elasticsearch/data
       - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
