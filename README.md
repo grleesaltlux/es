@@ -59,7 +59,12 @@ docker-compose down
 ```
 ---
 ## 사용 방법
-
+### 목차
+- [인덱스 전체 조회](https://github.com/grleesaltlux/es#인덱스-전체-조회)
+- [인덱스 생성](https://github.com/grleesaltlux/es#인덱스-생성)
+- [인덱스 조회](https://github.com/grleesaltlux/es#인덱스-조회)
+- [인덱스 삭제](https://github.com/grleesaltlux/es#인덱스-삭제)
+- [doc 등록](https://github.com/grleesaltlux/es#document-등록)
 ### 인덱스 전체 조회
 - method : GET
 - url
