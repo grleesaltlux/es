@@ -27,8 +27,8 @@ services:
     container_name: ann_es
     environment:
     - discovery.type=single-node # 싱글 es 설정
-    - bootstrap.memory_lock=true
-    - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # min, max memory 설정
+    - bootstrap.memory_lock=true # 아래와 같이 생략 가능
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # min, max memory 설정 (생략가능)
     ports:
     - "9200:9200"
     - "9300:9300"
@@ -49,12 +49,16 @@ docker-compose up -d
 ```shell
 docker ps | grep ann_es
 ```
+### 컨테이너 로그 확인
+```shell
+docker logs -f ann_es
+```
 ### 컨테이너 삭제
 ```shell
 docker-compose down
 ```
 ---
-## 사용
+## 사용 방법
 
 ### 인덱스 전체 조회
 - method : GET
@@ -66,11 +70,6 @@ docker-compose down
   ```
   curl ${IP}:${PORT}/_cat/indices?v
   ```
-- output
- 
-
-    health status index uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-    yellow open   test  HTmfuNd3R2ec-SD4LzctyA   1   1          0            0       225b           225b
 ### 인덱스 생성
 - method : PUT
 - Variable
@@ -83,52 +82,42 @@ docker-compose down
   ```
   curl -X PUT ${IP}:${PORT}/${INDEX_NAME}
   ```
-- output sample
 
+### 인덱스 조회
+- method : GET
+- Variable
+  - INDEX_NAME : 생성하려는 인덱스 이름
+- url
+  ```
+  http://${IP}:${PORT}/${INDEX_NAME}?pretty
+  ```
+- shell
+  ```
+  curl -X PUT ${IP}:${PORT}/${INDEX_NAME}?pretty
+  ```
 
-    {"acknowledged":true,"shards_acknowledged":true,"index":"test"}
-
----
-### reference
-- https://hub.docker.com/_/elasticsearch
-- https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
-
- 
-http://211.109.9.144:9200/_aliases?pretty=true
-
-_status
-
-클러스터에 존재하는 인덱스 전체 조회
-http://211.109.9.144:9200/_cat/indices?v
-
-인덱스 생성
-PUT /test?pretty
-인덱스 조회
-GET /test?pretty
-인덱스 삭제
-DELETE /test?pretty
-
-### 1. create IAM user using AWS console
-- user access type
-    - Access Key
-    - Password
-- Permissions policies
-    - AdministratorAccess
-    - AmazonEKSVPCResourceController
-
-### 2. AWS Configure IAM to server
-```shell
-aws configure
-```
->AWS Access Key ID [****************AXNL]: ${public access key}
->
->AWS Secret Access Key [****************UIqm]: ${private access key}
->
->Default region name [ap-northeast-1]: ${region}
->
->Default output format [json]: json
-
-
-- asd
-  - https://hub.docker.com/_/elasticsearch
-  - https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+### 인덱스 삭제
+- method : DELETE
+- Variable
+  - INDEX_NAME : 생성하려는 인덱스 이름
+- url
+  ```
+  http://${IP}:${PORT}/${INDEX_NAME}
+  ```
+- shell
+  ```
+  curl -X PUT ${IP}:${PORT}/${INDEX_NAME}
+  ```
+  
+### document 등록
+- method : DELETE
+- Variable
+  - INDEX_NAME : document를 등록하려는 인덱스 이름
+- header
+  - Content-type:application/json
+- shell
+  ```
+  curl -XPOST '${IP}:${PORT}/${INDEX_NAME}/_doc/[id]?pretty' \
+  -H 'Content-type:application/json' \
+  -d '{"name": "test"}'
+  ```
