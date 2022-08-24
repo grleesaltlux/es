@@ -68,7 +68,7 @@ docker-compose down
 ### 인덱스 전체 조회
 - method : GET
 - url
-  ```http request
+  ```
   http://${IP}:${PORT}/_cat/indices?v
   ```
 - shell
@@ -118,11 +118,12 @@ docker-compose down
 - method : DELETE
 - Variable
   - INDEX_NAME : document를 등록하려는 인덱스 이름
+  - ID : document 번호
 - header
   - Content-type:application/json
 - shell
   ```
-  curl -XPOST '${IP}:${PORT}/${INDEX_NAME}/_doc/[id]?pretty' \
+  curl -XPOST '${IP}:${PORT}/${INDEX_NAME}/_doc/${ID}?pretty' \
   -H 'Content-type:application/json' \
   -d '{"name": "test"}'
   ```
