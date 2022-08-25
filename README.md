@@ -94,7 +94,7 @@ docker-compose down
   ```
 - shell
   ```
-  curl -X PUT ${IP}:${PORT}/${INDEX_NAME}?pretty
+  curl -XGET ${IP}:${PORT}/${INDEX_NAME}?pretty
   ```
 
 ### 인덱스 삭제
@@ -107,11 +107,11 @@ docker-compose down
   ```
 - shell
   ```
-  curl -X PUT ${IP}:${PORT}/${INDEX_NAME}
+  curl -XDELETE ${IP}:${PORT}/${INDEX_NAME}
   ```
   
 ### document 등록
-- method : DELETE
+- method : PUT
 - Variable
   - INDEX_NAME : document를 등록하려는 인덱스 이름
   - ID : document 번호
@@ -119,7 +119,7 @@ docker-compose down
   - Content-type:application/json
 - shell
   ```
-  curl -XPOST '${IP}:${PORT}/${INDEX_NAME}/_doc/${ID}?pretty' \
+  curl -X PUT '${IP}:${PORT}/${INDEX_NAME}/_doc/${ID}?pretty' \
     -H 'Content-type:application/json' \
     -d '{"name": "test"}'
   ```
