@@ -15,8 +15,8 @@ chmod 755 ./elasticsearch.yml
 version: '3.8'
 
 networks:
-ann_es:
-driver: bridge
+  ann_es:
+    driver: bridge
 
 services:
   es:
